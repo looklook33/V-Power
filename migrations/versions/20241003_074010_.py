@@ -47,6 +47,7 @@ def upgrade():
     sa.Column('isManager', sa.Boolean(), nullable=True),
     sa.Column('describe', sa.String(length=255), nullable=True),
     sa.Column('userId', sa.Integer(), nullable=True),
+    sa.Column('url', sa.String(length=255), nullable=True),
     sa.ForeignKeyConstraint(['userId'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )

@@ -18,6 +18,20 @@ def get_equipment():
     equipment_list = Equipment.query.all()
     return {'equipment': [equipment.to_dict() for equipment in equipment_list]}
 
+# Query equipment by ID
+@equipment_routes.route('/<int:id>', methods=['GET'])
+@login_required
+def get_equipment_by_id(id):
+    """
+    Query for equipment by its ID.
+    Login is required for access.
+    """
+    equipment = Equipment.query.get(id)
+    if not equipment:
+        return {"error": "Equipment not found"}, 404
+
+    return {'equipment': equipment.to_dict()}, 200
+
 
 @equipment_routes.route('/', methods=['POST'])
 @login_required

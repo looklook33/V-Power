@@ -1,0 +1,93 @@
+/* General Form Container */
+.trainer-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Heading */
+  h1 {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Form Labels */
+  label {
+    font-size: 16px;
+    color: #333;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  /* Input Fields */
+  .trainer-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  textarea.trainer-input {
+    height: 100px;
+    resize: vertical;
+  }
+  
+  /* Error Message Styling */
+  .error {
+    color: red;
+    font-size: 14px;
+    margin-top: -5px;
+  }
+  
+  /* Submit Button */
+  .trainer-submit-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .trainer-submit-btn:hover {
+    background-color: #218838;
+  }
+  
+  /* Delete Button */
+  .trainer-delete-btn {
+    background-color: #ff4040;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .trainer-delete-btn:hover {
+    background-color: #ff2020;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .trainer-form {
+      width: 90%;
+    }
+    
+    .trainer-submit-btn, .trainer-delete-btn {
+      width: 100%;
+    }
+  }
+  

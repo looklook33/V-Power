@@ -1,0 +1,114 @@
+/* General Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+  }
+  
+  h1 {
+    text-align: center;
+    color: #333;
+    margin: 20px 0;
+  }
+  
+  /* Schedule Container */
+  .schedule-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .schedule-list {
+    display: inline-block;
+    vertical-align: middle;
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+  }
+  
+  .schedule-list li {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+    padding: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+  }
+  
+  .schedule-list li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* NavLink Styles */
+  .schedule-list li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 18px;
+    display: block;
+  }
+  
+  .schedule-list li a:hover {
+    color: #ff4040;
+  }
+  
+  /* Button Styles */
+  button {
+    background-color: #ff4040;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+    margin: 10px 0;
+  }
+  
+  button:hover {
+    background-color: #ff2020;
+  }
+  
+  button:focus {
+    outline: none;
+  }
+  
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .good-workout-sign {
+    color: green;
+    font-weight: bold;
+    margin-left: 10px;
+    font-size: 0.9em;
+  }
+
+  .no-edit-cancel {
+    color: red;
+    font-weight: bold;
+    margin-left: 10px;
+    font-size: 0.9em;
+  }
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .schedule-container {
+      padding: 10px;
+    }
+  
+    .schedule-list {
+      width: 100%;
+      padding: 0 10px;
+    }
+  
+    button {
+      width: 100%;
+    }
+  }
+  

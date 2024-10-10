@@ -10,7 +10,9 @@ from .api import (
     auth_routes,
     schedule_routes,
     gallery_routes,
-    equipment_routes
+    equipment_routes,
+    trainer_routes,
+    member_routes
 
 )
 from .seeds import seed_commands
@@ -37,6 +39,8 @@ app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(schedule_routes, url_prefix='/api/schedules')
 app.register_blueprint(gallery_routes, url_prefix='/api/galleries')
 app.register_blueprint(equipment_routes, url_prefix='/api/equipment')
+app.register_blueprint(trainer_routes, url_prefix='/api/trainers')
+app.register_blueprint(member_routes, url_prefix='/api/members')
 db.init_app(app)
 Migrate(app, db)
 

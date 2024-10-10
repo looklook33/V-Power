@@ -1,0 +1,67 @@
+
+.schedule-details-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Title */
+  h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Details Paragraphs */
+  p {
+    font-size: 16px;
+    color: #555;
+    margin: 10px 0;
+  }
+  
+  /* Strong Text */
+  strong {
+    color: #222;
+  }
+  
+  /* Trainer and Member Sections */
+  .trainer-info,
+  .member-info {
+    background-color: #e9f7ef;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 15px;
+  }
+  
+  /* Buttons */
+  button {
+    margin-right: 10px;
+    padding: 10px 15px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: rgba(255, 0, 0, 0.689);
+  }
+  
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .schedule-details-container {
+      width: 90%;
+    }
+  
+    button {
+      width: 100%;
+      margin: 5px 0;
+    }
+  }
+  

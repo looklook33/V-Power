@@ -18,6 +18,20 @@ def get_galleries():
     galleries = Gallery.query.all()
     return {'galleries': [gallery.to_dict() for gallery in galleries]}
 
+# Query galleries by ID
+@gallery_routes.route('/<int:id>', methods=['GET'])
+@login_required
+def get_gallery_by_id(id):
+    """
+    Query for a gallery by its ID.
+    Login is required for access.
+    """
+    gallery = Gallery.query.get(id)
+    if not gallery:
+        return {"error": "Gallery not found"}, 404
+
+    return {'gallery': gallery.to_dict()}, 200
+
 
 @gallery_routes.route('/', methods=['POST'])
 @login_required

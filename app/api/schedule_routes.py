@@ -29,18 +29,12 @@ def all_schedules():
     """
     Query for all schedules. Only managers can see all members' schedules.
     """
-    # user = current_user.to_dict()
-    # is_manager = user['roles'][0]['isManager']
-    # print(f"\n\n\n\n\n{user}\n\n\n\n\n")
-    # print(f'\n\n\n\n\n{is_manager}')
-    # schedules = Schedule.query.all()
-    # schedules = Schedule.query.filter(Schedule.userId == user['id']).all()
-    # return {'schedules': [schedule.to_dict() for schedule in schedules]}
+
     if is_manager():
         schedules = Schedule.query.all()
-    # elif not is_manager:
-    #     schedules = Schedule.query.filter(Schedule.userId == user['id']).all()
-
+        return {'schedules': [schedule.to_dict() for schedule in schedules]}
+    elif not is_manager():
+        schedules = Schedule.query.filter_by(userId=current_user.id).all()
         return {'schedules': [schedule.to_dict() for schedule in schedules]}
 
    
@@ -59,6 +53,20 @@ def my_schedules():
         return {'schedules': [schedule.to_dict() for schedule in schedules]}
     return {"error": "Unauthorized access"}, 403
 
+# Query schedules by their ID (for any user)
+@schedule_routes.route('/<int:id>', methods=['GET'])
+@login_required
+def get_schedule_by_id(id):
+    """
+    Query for a schedule by its ID.
+    Login is required for access.
+    """
+    schedule = Schedule.query.get(id)
+    if not schedule:
+        return {"error": "Schedule not found"}, 404
+    
+    return {'schedule': schedule.to_dict()}, 200
+
 
 @schedule_routes.route('/', methods=['POST'])
 @login_required
@@ -73,19 +81,17 @@ def create_schedule():
     member_id = data.get('member_id')
     trainer_id = data.get('trainer_id')
     describe = data.get('describe')
+    date_str = data.get('date')  # New: Date field
     start_time_str = data.get('startTime')
     end_time_str = data.get('endTime')
 
-    # Check if both member and trainer IDs are provided
-    if not member_id or not trainer_id:
-        return {"error": "Both a member and a trainer are required for a schedule"}, 400
-
-    # Convert time strings to Python time objects
+    # Validate date and time formats
     try:
+        schedule_date = datetime.strptime(date_str, '%Y-%m-%d').date()
         start_time = datetime.strptime(start_time_str, '%H:%M').time()
         end_time = datetime.strptime(end_time_str, '%H:%M').time()
     except ValueError:
-        return {"error": "Invalid time format. Use 'HH:MM' format"}, 400
+        return {"error": "Invalid date or time format. Use 'YYYY-MM-DD' for date and 'HH:MM' for time."}, 400
 
     # Query the users based on the provided IDs
     member = User.query.filter_by(id=member_id).first()
@@ -114,11 +120,12 @@ def create_schedule():
     # Create the new schedule
     new_schedule = Schedule(
         describe=describe,
+        date=schedule_date, 
         startTime=start_time,
         endTime=end_time,
         create_at=datetime.now(),
         updated_at=datetime.now(),
-        userId = current_user.id
+        userId=current_user.id
     )
     new_schedule.users.append(member)
     new_schedule.users.append(trainer)
@@ -128,8 +135,6 @@ def create_schedule():
 
     return new_schedule.to_dict(), 201
 
-# Manager: Edit any schedule
-# Member: Edit their own schedule
 @schedule_routes.route('/<int:id>', methods=['PUT'])
 @login_required
 def edit_schedule(id):
@@ -139,24 +144,22 @@ def edit_schedule(id):
     Managers can edit any schedule.
     """
     schedule = Schedule.query.get(id)
+    if not schedule:
+        return {"error": "Schedule not found"}, 404
+
     data = request.get_json()
 
-    # Convert startTime and endTime from strings to time objects if provided
+    # Convert date, startTime, and endTime from strings to objects if provided
+    date_str = data.get('date')
     start_time_str = data.get('startTime')
     end_time_str = data.get('endTime')
 
     try:
-        if start_time_str:
-            start_time = datetime.strptime(start_time_str, '%H:%M').time()
-        else:
-            start_time = schedule.startTime
-
-        if end_time_str:
-            end_time = datetime.strptime(end_time_str, '%H:%M').time()
-        else:
-            end_time = schedule.endTime
+        schedule_date = datetime.strptime(date_str, '%Y-%m-%d').date() if date_str else schedule.date
+        start_time = datetime.strptime(start_time_str, '%H:%M').time() if start_time_str else schedule.startTime
+        end_time = datetime.strptime(end_time_str, '%H:%M').time() if end_time_str else schedule.endTime
     except ValueError:
-        return {"error": "Invalid time format. Use 'HH:MM' format"}, 400
+        return {"error": "Invalid date or time format. Use 'YYYY-MM-DD' for date and 'HH:MM' for time."}, 400
 
     # Check if the current user is allowed to edit this schedule
     is_schedule_user = any(user.id == current_user.id for user in schedule.users)
@@ -173,6 +176,7 @@ def edit_schedule(id):
 
     # Update the schedule
     schedule.describe = data.get('describe', schedule.describe)
+    schedule.date = schedule_date  
     schedule.startTime = start_time
     schedule.endTime = end_time
     schedule.updated_at = datetime.now()
