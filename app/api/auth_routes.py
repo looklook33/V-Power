@@ -2,6 +2,7 @@ from flask import Blueprint, request
 from app.models import User, db
 from app.forms import LoginForm
 from app.forms import SignUpForm
+from app.models import Role
 from flask_login import current_user, login_user, logout_user, login_required
 
 auth_routes = Blueprint('auth', __name__)
@@ -12,6 +13,7 @@ def authenticate():
     """
     Authenticates a user.
     """
+
     if current_user.is_authenticated:
         return current_user.to_dict()
     return {'errors': {'message': 'Unauthorized'}}, 401
@@ -46,7 +48,7 @@ def logout():
 @auth_routes.route('/signup', methods=['POST'])
 def sign_up():
     """
-    Creates a new user and logs them in
+    Creates a new user, assigns default role as Member, and logs them in
     """
     form = SignUpForm()
     form['csrf_token'].data = request.cookies['csrf_token']
@@ -57,10 +59,23 @@ def sign_up():
             password=form.data['password']
         )
         db.session.add(user)
+        
+        # Assign default role (Member) to the new user
+        member_role = Role(
+            describe="Regular gym member",
+            isManager=False,
+            isMember=True,
+            isTrainer=False,
+            user=user
+        )
+        db.session.add(member_role)
+        
         db.session.commit()
         login_user(user)
         return user.to_dict()
+    
     return form.errors, 401
+
 
 
 @auth_routes.route('/unauthorized')
