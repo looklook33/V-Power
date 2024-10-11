@@ -29,7 +29,7 @@ demo_roles = [
         isTrainer=False,
         isManager=True,
         describe="Manager at the gym",
-        url='https://photos.onedrive.com/share/788075063AF139E8!s6dd99543416d43cc97977e64e19a49cc?cid=788075063AF139E8&resId=788075063AF139E8!s6dd99543416d43cc97977e64e19a49cc&ithint=photo&migratedtospo=true&redeem=aHR0cHM6Ly8xZHJ2Lm1zL2kvYy83ODgwNzUwNjNhZjEzOWU4L0VVT1YyVzF0UWN4RGw1ZC1aT0dhU2N3Qi16YWRPS29XQXJKZ2RXLUNzdVA0MHc',
+        url='https://i.postimg.cc/tJvCNV2b/image2.jpg',
         userId=4
     ),
     Role(

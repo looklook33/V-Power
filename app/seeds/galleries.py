@@ -19,7 +19,7 @@ demo_galleries = [
     Gallery(
         type='Workout',
         url='https://i.postimg.cc/TYKYWS2S/thumbnail-image1-1.jpg',
-        describe='Dumbbell squats target major lower body muscles like the glutes, quads, hamstrings, and calves. The added weight from the dumbbells activates your posterior chain muscles, which includes your hamstrings and glutes',
+        describe='Dumbbell squats target major lower body muscles like the glutes',
         created_at=datetime.now(),
         updated_at=datetime.now(),
     ),
