@@ -22,7 +22,7 @@ function TrainerPage() {
     <div>
       <h1>Our Trainers</h1>
       {isManager && (
-        <button onClick={() => navigate('/trainers/new')}>Add a new trainer</button>
+        <button className='button-man' onClick={() => navigate('/trainers/new')}> Add a new trainer</button>
       )}
       <div className="trainer-container">
         {trainers.length > 0 ? (

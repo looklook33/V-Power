@@ -11,7 +11,7 @@ function Navigation() {
         <NavLink to="/equipment">Equipment</NavLink>
         <NavLink to="/galleries">Workout Gallery</NavLink>
         <NavLink to="/schedule">Schedule</NavLink>
-        <NavLink to="/signup">Contact Us</NavLink>
+        {/* <NavLink to="/signup">Contact Us</NavLink> */}
       </li>
 
       <li>

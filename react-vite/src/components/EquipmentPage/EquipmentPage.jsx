@@ -21,7 +21,7 @@ const EquipmentPage = () => {
     <div>
       <h1>Gym Equipment</h1>
       {isManager && (
-        <button onClick={() => navigate(`/equipment/new`)}>Add new equipment</button>
+        <button className='button-man' onClick={() => navigate(`/equipment/new`)}>Add new equipment</button>
       )}
       <ul className="equipment-container">
         {equipment.map((item) => (

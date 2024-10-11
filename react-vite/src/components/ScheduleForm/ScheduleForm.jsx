@@ -19,8 +19,23 @@ export default function ScheduleForm() {
   const [errors, setErrors] = useState({});
   const user = useSelector((state) => state.session.user);
 
+  // Get current date and time
+  const getCurrentDateTime = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
+  const getCurrentTime = () => {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    return `${hours}:${minutes}`;
+  };
+
   useEffect(() => {
-    // Fetch trainers and members from the backend
     fetch("/api/trainers")
       .then((res) => res.json())
       .then((data) => setTrainers(data.trainers || []));
@@ -29,6 +44,23 @@ export default function ScheduleForm() {
       .then((res) => res.json())
       .then((data) => setMembers(data.members || []));
   }, []);
+
+  const isDateTimeValid = (selectedDate, selectedStartTime, selectedEndTime) => {
+    const currentDate = getCurrentDateTime();
+    const currentTime = getCurrentTime();
+
+    // Create Date objects for comparison
+    const currentDateTime = new Date(`${currentDate}T${currentTime}`);
+    const selectedDateTime = new Date(`${selectedDate}T${selectedStartTime}`);
+    const selectedEndDateTime = new Date(`${selectedDate}T${selectedEndTime}`);
+
+    return {
+      isValid: selectedDateTime > currentDateTime && selectedEndDateTime > selectedDateTime,
+      isPastDate: selectedDate < currentDate,
+      isPastTime: selectedDate === currentDate && selectedStartTime < currentTime,
+      isEndTimeBeforeStart: selectedEndDateTime <= selectedDateTime
+    };
+  };
 
   const validateForm = () => {
     const newErrors = {};
@@ -52,6 +84,21 @@ export default function ScheduleForm() {
       newErrors.endTime = "End time is required.";
     }
 
+    // Validate date and time
+    if (date && startTime && endTime) {
+      const dateTimeValidation = isDateTimeValid(date, startTime, endTime);
+      
+      if (dateTimeValidation.isPastDate) {
+        newErrors.date = "Cannot select a past date";
+      }
+      if (dateTimeValidation.isPastTime) {
+        newErrors.startTime = "Cannot select a past time";
+      }
+      if (dateTimeValidation.isEndTimeBeforeStart) {
+        newErrors.endTime = "End time must be after start time";
+      }
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -72,16 +119,21 @@ export default function ScheduleForm() {
     const method = schedule ? 'PUT' : 'POST';
     const endpoint = schedule ? `/api/schedules/${schedule.id}` : '/api/schedules';
 
-    const response = await fetch(endpoint, {
-      method,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(scheduleData),
-    });
+    try {
+      const response = await fetch(endpoint, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(scheduleData),
+      });
 
-    if (response.ok) {
-      navigate('/schedule');
-    } else {
-      alert('Failed to submit schedule');
+      if (response.ok) {
+        navigate('/schedule');
+      } else {
+        const data = await response.json();
+        setErrors(data.errors || { general: 'Please Update Start Time and End Time' });
+      }
+    } catch (error) {
+      setErrors({ general: 'An error occurred while saving the schedule' });
     }
   };
 
@@ -143,6 +195,7 @@ export default function ScheduleForm() {
           id="date"
           type="date"
           value={date}
+          min={getCurrentDateTime()} // Set minimum date to current date
           onChange={(e) => setDate(e.target.value)}
           className="schedule-form-input"
         />
@@ -167,6 +220,8 @@ export default function ScheduleForm() {
           className="schedule-form-input"
         />
         {errors.endTime && <p className="error">{errors.endTime}</p>}
+
+        {errors.general && <p className="error general-error">{errors.general}</p>}
 
         <button type="submit" className="schedule-form-submit-button">
           {schedule ? "Update Schedule" : "Create Schedule"}

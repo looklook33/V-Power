@@ -12,7 +12,6 @@ body {
     margin: 20px 0;
   }
   
-  /* Schedule Container */
   .schedule-container {
     display: flex;
     flex-direction: column;
@@ -45,7 +44,6 @@ body {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   }
   
-  /* NavLink Styles */
   .schedule-list li a {
     text-decoration: none;
     color: #333;
@@ -57,7 +55,6 @@ body {
     color: #ff4040;
   }
   
-  /* Button Styles */
   button {
     background-color: #ff4040;
     color: white;
@@ -96,7 +93,7 @@ body {
     margin-left: 10px;
     font-size: 0.9em;
   }
-  /* Responsive Design */
+
   @media (max-width: 768px) {
     .schedule-container {
       padding: 10px;

@@ -20,7 +20,7 @@ demo_roles = [
         isMember=True,
         isTrainer=True,
         isManager=False,
-        describe="Trainer Team",
+        describe="NASM Corrective Exercise Specialist",
         url='https://scdaily.com/images/IOwLJIPJdrHMb8BRZaFjObwVSVxgunlfllntzyrg.jpeg',
         userId=3
     ),
@@ -36,7 +36,7 @@ demo_roles = [
         isMember=False,
         isTrainer=True,
         isManager=False,
-        describe="Coach Liu",
+        describe="Fitness Nutrition Specialist (ISSA)",
         url='https://i.postimg.cc/tJvCNV2b/image2.jpg',
         userId=5
     ),

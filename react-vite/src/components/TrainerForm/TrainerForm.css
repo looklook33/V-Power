@@ -1,4 +1,4 @@
-/* General Form Container */
+
 .trainer-form {
     display: flex;
     flex-direction: column;
@@ -11,7 +11,6 @@
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   }
   
-  /* Heading */
   h1 {
     text-align: center;
     font-size: 24px;
@@ -19,7 +18,6 @@
     margin-bottom: 20px;
   }
   
-  /* Form Labels */
   label {
     font-size: 16px;
     color: #333;
@@ -27,7 +25,6 @@
     margin-bottom: 5px;
   }
   
-  /* Input Fields */
   .trainer-input {
     width: 100%;
     padding: 10px;
@@ -41,14 +38,12 @@
     resize: vertical;
   }
   
-  /* Error Message Styling */
   .error {
     color: red;
     font-size: 14px;
     margin-top: -5px;
   }
-  
-  /* Submit Button */
+
   .trainer-submit-btn {
     background-color: #28a745;
     color: white;
@@ -64,7 +59,6 @@
     background-color: #218838;
   }
   
-  /* Delete Button */
   .trainer-delete-btn {
     background-color: #ff4040;
     color: white;
@@ -80,7 +74,6 @@
     background-color: #ff2020;
   }
   
-  /* Responsive Design */
   @media (max-width: 768px) {
     .trainer-form {
       width: 90%;

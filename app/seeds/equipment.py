@@ -5,7 +5,7 @@ demo_equipment = [
     Equipment(
         type='Treadmill',
         url='https://i.postimg.cc/FHqSL3Qb/thumbnail-image5.jpg',
-        describe='Top-quality treadmill for cardio',
+        describe='Top-quality treadmill for cardio,Top-quality treadmill for cardio,Top-quality treadmill for cardio',
         created_at=datetime.now(),
         updated_at=datetime.now(),
     ),

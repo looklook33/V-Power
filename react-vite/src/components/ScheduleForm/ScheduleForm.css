@@ -1,29 +1,23 @@
-/* General Form Container */
-.schedule-form-container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+.schedule-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   }
   
-  /* Title */
+
   .schedule-form-title {
     text-align: center;
     font-size: 24px;
     color: #333;
     margin-bottom: 20px;
   }
-  
-  /* Form Layout */
-  .schedule-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  /* Form Labels */
+
   label {
     font-size: 16px;
     color: #333;
@@ -31,7 +25,7 @@
     margin-bottom: 5px;
   }
   
-  /* Input Fields */
+
   .schedule-form-input,
   .schedule-form-select {
     width: 100%;
@@ -41,14 +35,14 @@
     font-size: 16px;
   }
   
-  /* Error Message Styling */
+ 
   .error {
     color: red;
     font-size: 14px;
     margin-top: -5px;
   }
   
-  /* Submit Button */
+
   .schedule-form-submit-button {
     background-color: #007bff;
     color: white;
@@ -64,10 +58,10 @@
     background-color: #0056b3;
   }
   
-  /* Responsive Design */
+
   @media (max-width: 768px) {
     .schedule-form-container {
-      width: 90%;
+      width: 80%;
     }
   
     .schedule-form-submit-button {
@@ -75,3 +69,15 @@
     }
   }
   
+  .error {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+  }
+  
+  .general-error {
+    background-color: #ffeaea;
+    padding: 0.5rem;
+    border-radius: 4px;
+    margin: 1rem 0;
+  }

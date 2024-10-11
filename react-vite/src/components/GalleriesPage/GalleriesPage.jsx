@@ -22,7 +22,7 @@ const GalleriesPage = () => {
       <h1>Workout Gallery</h1>
       
       {isManager && (
-        <button onClick={() => navigate(`/galleries/new`)}>Add a new gallery picture</button>
+        <button className='button-man' onClick={() => navigate(`/galleries/new`)}>Add a new gallery picture</button>
       )}
       <ul className="equipment-container">
         {galleries.map((gallery) => (
