@@ -6,6 +6,9 @@ from .schedule_users import schedule_users
 class Schedule(db.Model):
     __tablename__ = "schedules"
 
+    if environment == "production":
+        __table_args__ = {"schema": SCHEMA}
+
     id = db.Column(db.Integer, primary_key=True)
     describe = db.Column(db.String(255))
     date = db.Column(db.Date, nullable=False) 
@@ -13,7 +16,7 @@ class Schedule(db.Model):
     endTime = db.Column(db.Time, nullable=False)
     create_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True),onupdate=func.now())
-    userId = db.Column(db.Integer, db.ForeignKey('users.id'))
+    userId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')))
 
     users = db.relationship('User', secondary=schedule_users, back_populates='schedules')
 

@@ -4,13 +4,16 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 class Equipment(db.Model):
     __tablename__ = "equipment"
 
+    if environment == "production":
+        __table_args__ = {"schema": SCHEMA}
+
     id = db.Column(db.Integer, primary_key=True)
     type = db.Column(db.String(100), nullable=False)
     url = db.Column(db.String(255))
     describe = db.Column(db.String(255))
     created_at = db.Column(db.DateTime(timezone=True))
     updated_at = db.Column(db.DateTime(timezone=True))
-    userId = db.Column(db.Integer, db.ForeignKey('users.id'))
+    userId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')))
 
     user = db.relationship('User', back_populates='equipment')
 
