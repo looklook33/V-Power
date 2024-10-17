@@ -18,7 +18,7 @@ export default function ScheduleForm() {
   const [endTime, setEndTime] = useState(schedule?.endTime || "");
   const [errors, setErrors] = useState({});
   const user = useSelector((state) => state.session.user);
-  console.log('sssssssss',schedule)
+  // console.log('sssssssss',schedule)
   
   // Get current date and time
   const getCurrentDateTime = () => {
