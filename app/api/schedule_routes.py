@@ -88,10 +88,10 @@ def create_schedule():
     # Validate date and time formats
     try:
         schedule_date = datetime.strptime(date_str, '%Y-%m-%d').date()
-        start_time = datetime.strptime(start_time_str, '%H:%M').time()
-        end_time = datetime.strptime(end_time_str, '%H:%M').time()
+        start_time = datetime.strptime(start_time_str, '%H:%M:%S').time()
+        end_time = datetime.strptime(end_time_str, '%H:%M:%S').time()
     except ValueError:
-        return {"error": "Invalid date or time format. Use 'YYYY-MM-DD' for date and 'HH:MM' for time."}, 400
+        return {"error": "Invalid date or time format. Use 'YYYY-MM-DD' for date and 'HH:MM:SS' for time."}, 400
 
     # Query the users based on the provided IDs
     member = User.query.filter_by(id=member_id).first()
