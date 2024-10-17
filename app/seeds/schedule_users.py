@@ -1,17 +1,16 @@
 from app.models import db, Schedule, User
 
-# Seed data for schedule_users relationship
 def seed_schedule_users():
     # Retrieve existing users and schedules from the database
-    user1 = User.query.get(1)  # Assume user1 is a member
-    user2 = User.query.get(2)  # Assume user2 is a member
-    user3 = User.query.get(3)  # Another trainer
-    user4 = User.query.get(4)  # Another trainer
+    user1 = User.query.get(1)  
+    user2 = User.query.get(2)  
+    user3 = User.query.get(3)  
+    user4 = User.query.get(4)  
 
-    schedule1 = Schedule.query.get(1)  # First schedule
-    schedule2 = Schedule.query.get(2)  # Second schedule
-    schedule3 = Schedule.query.get(3)  # First schedule
-    schedule4 = Schedule.query.get(4)  # Second schedule
+    schedule1 = Schedule.query.get(1)  
+    schedule2 = Schedule.query.get(2) 
+    schedule3 = Schedule.query.get(3)  
+    schedule4 = Schedule.query.get(4)  
 
     # Associate schedules with users (trainers and members)
     schedule1.users.append(user1)  # Add user1 (member) to schedule1

@@ -81,7 +81,7 @@ def create_schedule():
     member_id = data.get('member_id')
     trainer_id = data.get('trainer_id')
     describe = data.get('describe')
-    date_str = data.get('date')  # New: Date field
+    date_str = data.get('date')  
     start_time_str = data.get('startTime')
     end_time_str = data.get('endTime')
 
@@ -138,30 +138,29 @@ def create_schedule():
 @schedule_routes.route('/<int:id>', methods=['PUT'])
 @login_required
 def edit_schedule(id):
-    """
-    Edit a schedule by its ID.
-    Members and trainers can only edit their own schedules.
-    Managers can edit any schedule.
-    """
+    
     schedule = Schedule.query.get(id)
     if not schedule:
         return {"error": "Schedule not found"}, 404
 
     data = request.get_json()
 
-    # Convert date, startTime, and endTime from strings to objects if provided
-    date_str = data.get('date')
-    start_time_str = data.get('startTime')
-    end_time_str = data.get('endTime')
+    # Extracting date, startTime, endTime, member_id, and trainer_id from frontend request
+    date_str = data.get('date')  # Expecting 'YYYY-MM-DD'
+    start_time_str = data.get('startTime')  # Expecting 'HH:MM:SS'
+    end_time_str = data.get('endTime')  # Expecting 'HH:MM:SS'
+    member_id = data.get('member_id')  # New member ID from frontend
+    trainer_id = data.get('trainer_id')  # New trainer ID from frontend
 
     try:
+        # Convert date and time strings from frontend into appropriate Python types
         schedule_date = datetime.strptime(date_str, '%Y-%m-%d').date() if date_str else schedule.date
-        start_time = datetime.strptime(start_time_str, '%H:%M').time() if start_time_str else schedule.startTime
-        end_time = datetime.strptime(end_time_str, '%H:%M').time() if end_time_str else schedule.endTime
+        start_time = datetime.strptime(start_time_str, '%H:%M:%S').time() if start_time_str else schedule.startTime
+        end_time = datetime.strptime(end_time_str, '%H:%M:%S').time() if end_time_str else schedule.endTime
     except ValueError:
-        return {"error": "Invalid date or time format. Use 'YYYY-MM-DD' for date and 'HH:MM' for time."}, 400
+        return {"error": "Invalid date or time format. Use 'YYYY-MM-DD' for date and 'HH:MM:SS' for time."}, 400
 
-    # Check if the current user is allowed to edit this schedule
+    # Check if the current user is authorized to edit this schedule
     is_schedule_user = any(user.id == current_user.id for user in schedule.users)
 
     if is_manager():
@@ -174,15 +173,34 @@ def edit_schedule(id):
     else:
         return {"error": "Permission denied"}, 403
 
-    # Update the schedule
+    # Update the schedule's description, date, startTime, endTime
     schedule.describe = data.get('describe', schedule.describe)
-    schedule.date = schedule_date  
+    schedule.date = schedule_date
     schedule.startTime = start_time
     schedule.endTime = end_time
     schedule.updated_at = datetime.now()
 
+    # Update the users (member and trainer)
+    # Clear current users in the schedule
+    schedule.users.clear()
+
+    # Add the new member and trainer to the schedule if they exist
+    if member_id:
+        member = User.query.get(member_id)
+        if not member:
+            return {"error": "Invalid member selected."}, 400
+        schedule.users.append(member)
+
+    if trainer_id:
+        trainer = User.query.get(trainer_id)
+        if not trainer:
+            return {"error": "Invalid trainer selected."}, 400
+        schedule.users.append(trainer)
+
     db.session.commit()
+
     return schedule.to_dict(), 200
+
 
 # Manager: Delete any schedule
 # Member: Delete their own schedule

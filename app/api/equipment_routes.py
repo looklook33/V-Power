@@ -5,7 +5,6 @@ from datetime import datetime
 
 equipment_routes = Blueprint('equipment', __name__)
 
-# Utility function to check if the current user is a manager
 def is_manager():
     return any(role.isManager for role in current_user.roles)
 

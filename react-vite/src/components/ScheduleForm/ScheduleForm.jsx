@@ -18,7 +18,8 @@ export default function ScheduleForm() {
   const [endTime, setEndTime] = useState(schedule?.endTime || "");
   const [errors, setErrors] = useState({});
   const user = useSelector((state) => state.session.user);
-
+  console.log('sssssssss',schedule)
+  
   // Get current date and time
   const getCurrentDateTime = () => {
     const now = new Date();
@@ -49,7 +50,6 @@ export default function ScheduleForm() {
     const currentDate = getCurrentDateTime();
     const currentTime = getCurrentTime();
 
-    // Create Date objects for comparison
     const currentDateTime = new Date(`${currentDate}T${currentTime}`);
     const selectedDateTime = new Date(`${selectedDate}T${selectedStartTime}`);
     const selectedEndDateTime = new Date(`${selectedDate}T${selectedEndTime}`);
@@ -84,7 +84,6 @@ export default function ScheduleForm() {
       newErrors.endTime = "End time is required.";
     }
 
-    // Validate date and time
     if (date && startTime && endTime) {
       const dateTimeValidation = isDateTimeValid(date, startTime, endTime);
       
@@ -103,34 +102,39 @@ export default function ScheduleForm() {
     return Object.keys(newErrors).length === 0;
   };
 
+  function formatTime(timeString) {
+    const [hours, minutes] = timeString.split(':').map(Number);
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:00`;
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-
+  
     const scheduleData = {
-      describe: description,
+      describe: description.trim(),
       date,
-      startTime,
-      endTime,
+      startTime:formatTime(startTime),
+      endTime:formatTime(endTime),
       member_id: selectedMember || user.id,
       trainer_id: selectedTrainer || user.id,
     };
-
+  
     const method = schedule ? 'PUT' : 'POST';
     const endpoint = schedule ? `/api/schedules/${schedule.id}` : '/api/schedules';
-
+  
     try {
       const response = await fetch(endpoint, {
         method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(scheduleData),
       });
-
+  
       if (response.ok) {
         navigate('/schedule');
       } else {
         const data = await response.json();
-        setErrors(data.errors || { general: 'Please Update Start Time and End Time' });
+        setErrors(data.errors || { general: data.error || 'An error occurred' });
       }
     } catch (error) {
       setErrors({ general: 'An error occurred while saving the schedule' });
@@ -195,7 +199,7 @@ export default function ScheduleForm() {
           id="date"
           type="date"
           value={date}
-          min={getCurrentDateTime()} // Set minimum date to current date
+          min={getCurrentDateTime()} 
           onChange={(e) => setDate(e.target.value)}
           className="schedule-form-input"
         />
