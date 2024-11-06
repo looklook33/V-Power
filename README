@@ -1,0 +1,65 @@
+<a name="readme-top"></a>
+
+## V-Power Fitness Website
+
+gym management platform with features for managing schedules, trainers, member bookings, and an image gallery accessible to public and private users. 
+
+It was built using this stack:
+
+#### Frontend
+
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
+
+#### Backend
+
+![Flask](https://flask.palletsprojects.com/en/stable/_images/flask-horizontal.png)
+![SQLAlchemy](https://www.sqlalchemy.org/img/sqla_logo.png)<br/>
+
+## Database
+<img src="https://i.postimg.cc/851Y2Wmr/Screenshot-2024-11-06-134604.png" width="500px">
+
+
+## Features
+
+### Trainer features
+
+<img src="https://i.postimg.cc/sfBFsPRp/Screenshot-2024-11-06-135054.png" width="500px">
+
+#### Create
+
+<img src="https://i.postimg.cc/tCVBm2GM/Screenshot-2024-11-06-134822.png" width="500px">
+
+#### Update and Delete
+
+<img src="https://i.postimg.cc/9XkxpsK9/Screenshot-2024-11-06-134811.png" width="500px">
+
+### Equipment features
+
+#### Create/Edit/Delete
+
+<img src="https://i.postimg.cc/Znvx2K2d/Screenshot-2024-11-06-134853.png" width="500px">
+
+<img src="https://i.postimg.cc/LXnW4SGH/Screenshot-2024-11-06-135444.png" width="500px">
+
+<img src="https://i.postimg.cc/0QFBb3q7/Screenshot-2024-11-06-135453.png" width="500px">
+
+### Schedule features
+
+#### Read/Create/Edit/Delete
+
+<img src="https://i.postimg.cc/kgsYxDmJ/Screenshot-2024-11-06-135637.png" width="500px">
+
+<img src="https://i.postimg.cc/yN7nxKgM/Screenshot-2024-11-06-135002.png" width="500px">
+
+<img src="https://i.postimg.cc/2SQ2Cy6d/Screenshot-2024-11-06-134922.png" width="500px">
+
+<img src="https://i.postimg.cc/63mhMGjK/Screenshot-2024-11-06-135025.png" width="500px">
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Contact
+
+https://www.linkedin.com/in/minyu-zhang-058b6857/
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
